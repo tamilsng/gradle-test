@@ -1,0 +1,58 @@
+##################################################
+# Service: Documentation
+##################################################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: documentation
+  labels:
+    app: documentation
+    service: documentation
+spec:
+  ports:
+  - port: 9093
+    name: http
+  selector:
+    app: documentation
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: documentation-branch
+  labels:
+    account: documentation
+###################################################
+# Deployment: documentation
+###################################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: documentation-v1
+  labels:
+    app: documentation
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: documentation
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: documentation
+        version: v1
+    spec:
+      serviceAccountName: documentation-branch
+      containers:
+      - name: documentation
+        image: aub-sandbox.photoninfotech.com:5000/documentation:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9093
+      imagePullSecrets:
+      - name: regcred
+---
+

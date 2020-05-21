@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Properties>
+        <Property name="filename">app</Property>
+        <Property name="filepath">/app/documentation/</Property>
+    </Properties>
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="${filepath}${filename}.log" filePattern="${filepath}${filename}-%d{yyyy-MM-dd-HH-mm}-%i.log"
+                 ignoreExceptions="false">
+      <PatternLayout>
+                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+      </PatternLayout>
+	  <SizeBasedTriggeringPolicy size="10 MB" />
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!-- avoid duplicated logs with additivity=false -->
+        <Logger name="com.aub" level="debug" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

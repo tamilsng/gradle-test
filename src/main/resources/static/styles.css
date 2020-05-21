@@ -1,0 +1,57 @@
+body, h1, h2, h3, h4, h5, h6 {
+	/* font-family: Arial, sans-serif; */
+	font-family: Helvetica;
+}
+
+body {
+	font-size: 12px;
+	margin: 0;
+}
+
+.model-info {
+	border-bottom: 1px solid #CACACA;
+	padding: 10px;
+}
+
+body a {
+	font-size: 16px;
+	color: #428bca;
+	outline: none;
+	background: transparent;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+h1 {
+	color: #FFFFFF;
+	font-weight: normal;
+	margin: 0;
+	text-rendering: optimizelegibility;
+	font-size: 1.5em;
+	font-weight: 500;
+	line-height: 1.1;
+	display: block;
+	margin-block-start: 0.67em;
+	margin-block-end: 0.67em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	font-weight: bold;
+	margin-left: 80px;
+	margin-right: 80px;
+}
+
+.page-header {
+	background: none repeat scroll 0 0 #89bf04;
+	border-bottom: 1px solid #E8E8E8;
+	border-top: 1px solid #E8E8E8;
+	box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.05) inset;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	position: relative;
+}
+
+.page-content {
+	margin-left: 80px;
+	margin-right: 80px;
+	padding-top: 40px;
+}
