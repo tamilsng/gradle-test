@@ -8,7 +8,7 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: lesson-087
+      IMAGE_NAME: lesson-089
       PROJECT_ID: diesel-media-340214
     steps:
     - name: Checkout
