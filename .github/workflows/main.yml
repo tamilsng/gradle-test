@@ -17,6 +17,10 @@ on:
         description: 'enter the enviroment for the deployment'
         required: true
         default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
       tag:
         description: 'enter the tag'
         required: true
@@ -47,6 +51,6 @@ jobs:
         name: running dev env
         run: echo "this is dev env"
         
-      - if: github.event.inputs.env == 'stg'
-        name: running dev env
-        run: echo "this is dev stg"
+      - if: github.event.inputs.env == 'staging'
+        name: running staging env
+        run: echo "this is staging env"
