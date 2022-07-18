@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: tag
+
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning' 
+        type: choice
+        options:
+        - info
+        - warning
+        - debug 
+      tags:
+        description: 'Test scenario tags'
+        required: false 
+        type: boolean
+      environment:
+        description: 'enter the enviroment for the deployment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
+        
+jobs:
+
+  my_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    # Optionally: unshallow as a separate operation
+    # - name: Unshallow
+    #   run: git fetch --prune --unshallow
+    - name: Find Tag
+      id: tagger
+      uses: jimschubert/query-tag-action@v1
+      with:
+        include: 'v*'
+        exclude: '*-rc*'
+        commit-ish: 'HEAD~'
+        # if you unshallow in a separate step, use the following option:
+        # skip-unshallow: 'true'
+    - name: Show Tag
+      id: display
+      run: |
+        echo 'Output from Find Tag: ${{steps.tagger.outputs.tag}}'
