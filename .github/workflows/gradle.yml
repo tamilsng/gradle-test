@@ -1,21 +1,21 @@
 ---
 name: Build and Push Python Image to Google Cloud Platform
-on:
-  push:
-    branches: [ master ]
+
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 env:
   DOCKER_FILE: "./Dockerfile"
   DOCKER_REGISTRY: "gcr.io/diesel-media-340214"
   DOCKER_BUILDKIT: 1      
   IMAGE_NAME: ${{ github.event.repository.name }}
   PROJECT_ID: diesel-media-340214
-
-  GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
-  GKE_CLUSTER: cluster-2    # TODO: update to cluster name
-  GKE_ZONE: us-central1   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
-  IMAGE: static-site
-
 
 jobs:
   build-push-gcr:
@@ -43,21 +43,3 @@ jobs:
       id: increment-git-tag
       run: |
         bash ./scripts/git_update.sh -v major
-
-    - name: Configure Docker Client
-      run: |-
-        gcloud auth configure-docker --quiet
-        gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
-        
-    # Get the GKE credentials so we can deploy to the cluster
-    - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
-      with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_ZONE }}
-        credentials: ${{ secrets.GKE_SA_KEY }}
-
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
-      run: |-
-        kubectl get nodes
-        kubectl get ns
